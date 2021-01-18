@@ -1,0 +1,1 @@
+API_KEY = "API_KEY_HERE" # get your API key in the following link: https://console.developers.google.com/apis/credentials -> create API_key, and then go to the search bar and search "Youtube DATA v3" and ENABLE the API
