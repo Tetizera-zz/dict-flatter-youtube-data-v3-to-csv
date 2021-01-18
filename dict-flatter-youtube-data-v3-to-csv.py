@@ -21,16 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
-
 from apiclient.discovery import build
 
 import csv
 import json
+import secret
 
 ## Variables ##
 CHANNEL_ID = 'UCUcyEsEjhPEDf69RRVhRh4A' # The Great War Channel by default. Get the CHANNEL ID by going here and pasting the channel's link: https://commentpicker.com/youtube-channel-id.php
 CSV_NAME = 'nome_da_saida' # name of the csv file
-API_KEY = "API_KEY_HERE" # get your API key in the following link: https://console.developers.google.com/apis/credentials -> create API_key, and then go to the search bar and search "Youtube DATA v3" and ENABLE the API
 ##########
 
 ### Code from
@@ -104,7 +103,7 @@ def render_csv(header, data, out_path=f'{CSV_NAME}.csv'):
 ## End Code
 
 
-youtube = build("youtube", "v3", developerKey=API_KEY)
+youtube = build("youtube", "v3", developerKey=secret.API_KEY)
 res = youtube.channels().list(id=CHANNEL_ID, part='contentDetails').execute()
 
 playlist_id = res['items'][0]['contentDetails']['relatedPlaylists']['uploads']
