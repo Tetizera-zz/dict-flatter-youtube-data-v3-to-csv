@@ -91,7 +91,7 @@ def get_tree(item):
     
     return tree
 
-def render_csv(header, data, out_path=f'{CSV_NAME}.csv'):
+def render_csv(header, data, out_path):
     input = []
 
     with open(out_path, 'w', newline='', encoding="utf-8") as f:
@@ -133,4 +133,4 @@ if isinstance(videos, list):
 else:
     header = [i[0] for i in tree]
 
-render_csv(header, tree)
+render_csv(header, tree, CSV_NAME)
