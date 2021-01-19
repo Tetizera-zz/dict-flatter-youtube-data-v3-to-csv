@@ -37,26 +37,30 @@ CSV_NAME = 'nome_da_saida' # name of the csv file
 
 def is_dict(item, ans=[]):
     tree = []
-    for k,v in item.items():
-        if isinstance(v,dict):
+    
+    for k, v in item.items():
+        if isinstance(v, dict):
             ans.append(str(k))
             tree.extend(is_dict(v, ans))
             ans=[]
+
         else:
             if ans:
                 ans.append(str(k))
-                key = ','.join(ans).replace(',','.')
+                key = ','.join(ans).replace(',', '.')
                 tree.extend([(key, str(v))])
                 ans.remove(str(k))
             else:
-                tree.extend([(str(k),str(v))])
+                tree.extend([(str(k), str(v))])
+    
     return tree
 
 def is_json(myjson):
     try:
         json_object = json.loads(myjson)
-    except (ValueError,TypeError) as e:
+    except (ValueError, TypeError) as e:
         return False
+    
     return True
 
 def get_tree(item):
@@ -69,13 +73,15 @@ def get_tree(item):
     elif isinstance(item, list):
         tree = []
         for i in item:
-            if is_json(i) == True:
+            if is_json(i):
                 i = json.loads(i)
+                
             tree.append(get_tree(i))
+            
         return tree
     
     elif isinstance(item, str):
-        if is_json(item) == True:
+        if is_json(item):
             item = json.loads(item)
             tree.extend(is_dict(item, ans=[]))
             return tree
@@ -92,11 +98,11 @@ def render_csv(header, data, out_path=f'{CSV_NAME}.csv'):
         dict_writer = csv.DictWriter(f, fieldnames=header)
         dict_writer.writeheader()
 
-        if not isinstance(data[0],list):
-            input.append(dict(data))
-        else:
+        if isinstance(data[0],list):
             for i in data:
                 input.append(dict(i))
+        else:
+            input.append(dict(data))
 
         dict_writer.writerows(input)
     return
